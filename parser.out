@@ -1,0 +1,467 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    CHAR
+    COLON
+    COMMA
+    ELSE
+    EQ
+    FLOAT
+    FOR
+    GT
+    IF
+    LT
+    STRING
+    VOID
+    WHILE
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> function
+Rule 2     function -> INT ID LPAREN RPAREN LBRACE statements RBRACE
+Rule 3     statements -> statements statement
+Rule 4     statements -> statement
+Rule 5     statement -> INT ID ASSIGN expression SEMICOLON
+Rule 6     statement -> RETURN expression SEMICOLON
+Rule 7     expression -> expression PLUS expression
+Rule 8     expression -> expression MINUS expression
+Rule 9     expression -> expression MULT expression
+Rule 10    expression -> expression DIVIDE expression
+Rule 11    expression -> NUMBER
+Rule 12    expression -> ID
+
+Terminals, with rules where they appear
+
+ASSIGN               : 5
+CHAR                 : 
+COLON                : 
+COMMA                : 
+DIVIDE               : 10
+ELSE                 : 
+EQ                   : 
+FLOAT                : 
+FOR                  : 
+GT                   : 
+ID                   : 2 5 12
+IF                   : 
+INT                  : 2 5
+LBRACE               : 2
+LPAREN               : 2
+LT                   : 
+MINUS                : 8
+MULT                 : 9
+NUMBER               : 11
+PLUS                 : 7
+RBRACE               : 2
+RETURN               : 6
+RPAREN               : 2
+SEMICOLON            : 5 6
+STRING               : 
+VOID                 : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 5 6 7 7 8 8 9 9 10 10
+function             : 1
+program              : 0
+statement            : 3 4
+statements           : 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . function
+    (2) function -> . INT ID LPAREN RPAREN LBRACE statements RBRACE
+
+    INT             shift and go to state 3
+
+    program                        shift and go to state 1
+    function                       shift and go to state 2
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> function .
+
+    $end            reduce using rule 1 (program -> function .)
+
+
+state 3
+
+    (2) function -> INT . ID LPAREN RPAREN LBRACE statements RBRACE
+
+    ID              shift and go to state 4
+
+
+state 4
+
+    (2) function -> INT ID . LPAREN RPAREN LBRACE statements RBRACE
+
+    LPAREN          shift and go to state 5
+
+
+state 5
+
+    (2) function -> INT ID LPAREN . RPAREN LBRACE statements RBRACE
+
+    RPAREN          shift and go to state 6
+
+
+state 6
+
+    (2) function -> INT ID LPAREN RPAREN . LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 7
+
+
+state 7
+
+    (2) function -> INT ID LPAREN RPAREN LBRACE . statements RBRACE
+    (3) statements -> . statements statement
+    (4) statements -> . statement
+    (5) statement -> . INT ID ASSIGN expression SEMICOLON
+    (6) statement -> . RETURN expression SEMICOLON
+
+    INT             shift and go to state 8
+    RETURN          shift and go to state 11
+
+    statements                     shift and go to state 9
+    statement                      shift and go to state 10
+
+state 8
+
+    (5) statement -> INT . ID ASSIGN expression SEMICOLON
+
+    ID              shift and go to state 12
+
+
+state 9
+
+    (2) function -> INT ID LPAREN RPAREN LBRACE statements . RBRACE
+    (3) statements -> statements . statement
+    (5) statement -> . INT ID ASSIGN expression SEMICOLON
+    (6) statement -> . RETURN expression SEMICOLON
+
+    RBRACE          shift and go to state 13
+    INT             shift and go to state 8
+    RETURN          shift and go to state 11
+
+    statement                      shift and go to state 14
+
+state 10
+
+    (4) statements -> statement .
+
+    RBRACE          reduce using rule 4 (statements -> statement .)
+    INT             reduce using rule 4 (statements -> statement .)
+    RETURN          reduce using rule 4 (statements -> statement .)
+
+
+state 11
+
+    (6) statement -> RETURN . expression SEMICOLON
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MULT expression
+    (10) expression -> . expression DIVIDE expression
+    (11) expression -> . NUMBER
+    (12) expression -> . ID
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+
+    expression                     shift and go to state 15
+
+state 12
+
+    (5) statement -> INT ID . ASSIGN expression SEMICOLON
+
+    ASSIGN          shift and go to state 18
+
+
+state 13
+
+    (2) function -> INT ID LPAREN RPAREN LBRACE statements RBRACE .
+
+    $end            reduce using rule 2 (function -> INT ID LPAREN RPAREN LBRACE statements RBRACE .)
+
+
+state 14
+
+    (3) statements -> statements statement .
+
+    RBRACE          reduce using rule 3 (statements -> statements statement .)
+    INT             reduce using rule 3 (statements -> statements statement .)
+    RETURN          reduce using rule 3 (statements -> statements statement .)
+
+
+state 15
+
+    (6) statement -> RETURN expression . SEMICOLON
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MULT expression
+    (10) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 19
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 21
+    MULT            shift and go to state 22
+    DIVIDE          shift and go to state 23
+
+
+state 16
+
+    (11) expression -> NUMBER .
+
+    SEMICOLON       reduce using rule 11 (expression -> NUMBER .)
+    PLUS            reduce using rule 11 (expression -> NUMBER .)
+    MINUS           reduce using rule 11 (expression -> NUMBER .)
+    MULT            reduce using rule 11 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 11 (expression -> NUMBER .)
+
+
+state 17
+
+    (12) expression -> ID .
+
+    SEMICOLON       reduce using rule 12 (expression -> ID .)
+    PLUS            reduce using rule 12 (expression -> ID .)
+    MINUS           reduce using rule 12 (expression -> ID .)
+    MULT            reduce using rule 12 (expression -> ID .)
+    DIVIDE          reduce using rule 12 (expression -> ID .)
+
+
+state 18
+
+    (5) statement -> INT ID ASSIGN . expression SEMICOLON
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MULT expression
+    (10) expression -> . expression DIVIDE expression
+    (11) expression -> . NUMBER
+    (12) expression -> . ID
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+
+    expression                     shift and go to state 24
+
+state 19
+
+    (6) statement -> RETURN expression SEMICOLON .
+
+    RBRACE          reduce using rule 6 (statement -> RETURN expression SEMICOLON .)
+    INT             reduce using rule 6 (statement -> RETURN expression SEMICOLON .)
+    RETURN          reduce using rule 6 (statement -> RETURN expression SEMICOLON .)
+
+
+state 20
+
+    (7) expression -> expression PLUS . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MULT expression
+    (10) expression -> . expression DIVIDE expression
+    (11) expression -> . NUMBER
+    (12) expression -> . ID
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+
+    expression                     shift and go to state 25
+
+state 21
+
+    (8) expression -> expression MINUS . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MULT expression
+    (10) expression -> . expression DIVIDE expression
+    (11) expression -> . NUMBER
+    (12) expression -> . ID
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+
+    expression                     shift and go to state 26
+
+state 22
+
+    (9) expression -> expression MULT . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MULT expression
+    (10) expression -> . expression DIVIDE expression
+    (11) expression -> . NUMBER
+    (12) expression -> . ID
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+
+    expression                     shift and go to state 27
+
+state 23
+
+    (10) expression -> expression DIVIDE . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MULT expression
+    (10) expression -> . expression DIVIDE expression
+    (11) expression -> . NUMBER
+    (12) expression -> . ID
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+
+    expression                     shift and go to state 28
+
+state 24
+
+    (5) statement -> INT ID ASSIGN expression . SEMICOLON
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MULT expression
+    (10) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 29
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 21
+    MULT            shift and go to state 22
+    DIVIDE          shift and go to state 23
+
+
+state 25
+
+    (7) expression -> expression PLUS expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MULT expression
+    (10) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MULT resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 7 (expression -> expression PLUS expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 21
+    MULT            shift and go to state 22
+    DIVIDE          shift and go to state 23
+
+  ! PLUS            [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! MINUS           [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! MULT            [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+
+
+state 26
+
+    (8) expression -> expression MINUS expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MULT expression
+    (10) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MULT resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 8 (expression -> expression MINUS expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 21
+    MULT            shift and go to state 22
+    DIVIDE          shift and go to state 23
+
+  ! PLUS            [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+  ! MINUS           [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+  ! MULT            [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+
+
+state 27
+
+    (9) expression -> expression MULT expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MULT expression
+    (10) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MULT resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 9 (expression -> expression MULT expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 21
+    MULT            shift and go to state 22
+    DIVIDE          shift and go to state 23
+
+  ! PLUS            [ reduce using rule 9 (expression -> expression MULT expression .) ]
+  ! MINUS           [ reduce using rule 9 (expression -> expression MULT expression .) ]
+  ! MULT            [ reduce using rule 9 (expression -> expression MULT expression .) ]
+  ! DIVIDE          [ reduce using rule 9 (expression -> expression MULT expression .) ]
+
+
+state 28
+
+    (10) expression -> expression DIVIDE expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MULT expression
+    (10) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MULT resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 10 (expression -> expression DIVIDE expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 21
+    MULT            shift and go to state 22
+    DIVIDE          shift and go to state 23
+
+  ! PLUS            [ reduce using rule 10 (expression -> expression DIVIDE expression .) ]
+  ! MINUS           [ reduce using rule 10 (expression -> expression DIVIDE expression .) ]
+  ! MULT            [ reduce using rule 10 (expression -> expression DIVIDE expression .) ]
+  ! DIVIDE          [ reduce using rule 10 (expression -> expression DIVIDE expression .) ]
+
+
+state 29
+
+    (5) statement -> INT ID ASSIGN expression SEMICOLON .
+
+    RBRACE          reduce using rule 5 (statement -> INT ID ASSIGN expression SEMICOLON .)
+    INT             reduce using rule 5 (statement -> INT ID ASSIGN expression SEMICOLON .)
+    RETURN          reduce using rule 5 (statement -> INT ID ASSIGN expression SEMICOLON .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for MULT in state 25 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 25 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for MULT in state 26 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 26 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for MULT in state 27 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 27 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for MULT in state 28 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 28 resolved as shift
