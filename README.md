@@ -1,6 +1,6 @@
-# 🧠 Mini Compiler in Python
+# 🧠 AiCodeX in Python
 
-This project is a **Mini Compiler** developed using Python. It demonstrates the core principles of compiler design, including lexical analysis, parsing, and code generation for a small subset of programming language constructs.
+This project is a **AiCodeX** developed using Python. It demonstrates the core principles of compiler design, including lexical analysis, parsing, and code generation for a small subset of programming language constructs.
 
 ## 📌 Features
 
@@ -11,7 +11,7 @@ This project is a **Mini Compiler** developed using Python. It demonstrates the 
 
 
 ## 📁 Folder Structure
-mini-c-compiler/
+AiCodeX/
 ├── lexer.py # Lexical analyzer
 ├── parser.py # Syntax analyzer
 ├── parsetab.py # Parser table (generated)
